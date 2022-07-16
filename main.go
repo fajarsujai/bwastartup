@@ -45,6 +45,7 @@ func main() {
 	api.GET("/campaigns", campaignHandler.GetCampaigns)
 	api.GET("/campaigns/:id", campaignHandler.GetCampaign)
 	api.POST("/campaigns", authMiddleware(authService, userService), campaignHandler.CreateCampaign)
+	api.PUT("/campaigns/:id", authMiddleware(authService, userService), campaignHandler.UpdatedCampaign)
 	router.Run()
 }
 
@@ -95,6 +96,14 @@ func authMiddleware(authService auth.Service, userService user.Service) gin.Hand
 
 	}
 }
+
+// # update campaign
+// user masukkan input
+// handler
+// mapping dari input ke input struct
+// input dari user, dan juga input yang ada di uri
+// service
+// repository
 
 //Ambil nilai header Authorization: Beared tokentokentoken
 // dari header Authorization, kita ambil nilai tokennya saja
