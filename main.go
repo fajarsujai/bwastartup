@@ -44,6 +44,7 @@ func main() {
 
 	api.GET("/campaigns", campaignHandler.GetCampaigns)
 	api.GET("/campaigns/:id", campaignHandler.GetCampaign)
+	api.POST("/campaigns", authMiddleware(authService, userService), campaignHandler.CreateCampaign)
 	router.Run()
 }
 
@@ -97,3 +98,16 @@ func authMiddleware(authService auth.Service, userService user.Service) gin.Hand
 
 //Ambil nilai header Authorization: Beared tokentokentoken
 // dari header Authorization, kita ambil nilai tokennya saja
+// input := campaign.CreateCampaignInput{}
+// input.Name = "Penggalangan Dana Startup"
+// input.ShortDescription = "short"
+// input.Description = "Loooonnggg"
+// input.GoalAmount = 100000000
+// input.Perks = "hadiah satu, dua, tiga"
+// inputUser, _ := userService.GetUserByID(1)
+// input.User = inputUser
+
+// _, err = campaignService.CreateCampaign(input)
+// if err != nil {
+// 	log.Fatal(err.Error())
+// }
