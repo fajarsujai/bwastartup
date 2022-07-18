@@ -42,6 +42,23 @@ func (h *transactionHandler) GetCampaignTransactions(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+func (h *transactionHandler) GetUserTransaction(c *gin.Context) {
+	currentUser := c.MustGet("currentUser").(user.User)
+	userID := currentUser.ID
+
+	transactions, err := h.service.GetTransactionByUserID(userID)
+
+	if err != nil {
+		response := helper.APIResponse("Failed to get user's transactions", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.APIResponse("User's transactions", http.StatusOK, "success", transaction.FormatUserTransactions(transactions))
+	c.JSON(http.StatusOK, response)
+
+}
+
 // parameter di uri
 // tangkap parameter mapping input struct
 // panggil service, input sturct sebagai parameter
